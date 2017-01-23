@@ -29,6 +29,8 @@
 	<script src="js/annyang-service.js"></script>
 	<script src="js/command.js">/*명령어*/</script>
 	<script src="js/controller.js">/*Annang Service Controller*/</script>
+	<!--  Sound Cloud -->
+	<script scr="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
 	<!-- 기능 구현  -->
 	<script src="js/function-service.js"></script>
 	<!--날씨 -->
@@ -46,12 +48,11 @@
 <body ng-controller="MirrorCtrl as commands">
 	<div class="top">
 		<div class="top-left">
-			<div class="date grey">{{date | date : 'EEEE, MMMM d yyyy'}}</div>
+			<div class="date grey">{{date | date : 'EEEE, MMMM d YYYY'}}</div>
 			<div class="time">{{date | date : 'hh:mm:ss a'}}</div>
 		</div>
 	</div>
-	<div class="top-right">
-		
+	<div class="top-right">	
 		<div class="weather">
 			<div id="weather-sidebar" class="fade" ng-show="focus == 'default'"></div>
 			<div>
@@ -81,7 +82,6 @@
 			</div>
 		</div>
 	</div>
-	</div>
 	<div class="container">
 		<div class="middle-center">
 			<div class="greeting hidden" ng-show="focus == 'default'">
@@ -95,10 +95,6 @@
 			<div class="contents-box animate-grow" ng-show="focus == 'whoissmartmirror'">
 				<img id="whoissmartmirror" src="image/whoissmartmirror.PNG" />
 			</div>
-			<div class="contents-box map animate-grow" ng-show="focus == 'map'">
-				<img class="contents map animate-grow" ng-src="{{map}}" />
-			</div>
-		</div>
 		<div class="bottom-center">
 			<!-- Command list -->
 			<div class="commands animate-grow" ng-show="focus == 'commands'">
@@ -117,34 +113,27 @@
 					<dd>미러는 누구일까요?</dd>
 					<dt>디버그</dt>
 					<dd>디버그 정보를 보여줍니다.</dd>
-					
-					<!-- 추가해야하는 기능 -->
-					<dt>옷 리스트 보여줘</dt>
-					<dd>옷 리스트를 보여줍니다.</dd>
-					<dt>**번째 옷 보여줘</dt>
-					<dd>**번째 옷을 보여줍니다.</dd>
 				</dl>
 			</div>
-
 			<div class="interim-result" ng-bind="interimResult"></div>
 			<div class="bottom-right">
 				<!-- 하단부 오른쪽  -->
+			</div>
+			<div class="bottom-left">
+				<!-- 하단부 왼쪽 -->
 			</div>
 		</div>
 	</div>
 
 	<!-- Debug Buttons -->
 	<div class="debug-info" ng-show="focus == 'debug'">
-		<!--  "debug == true">-->
-		<button ng-click="focus = (focus == 'commands')?'default':'commands'">Commands</button>
-		<button ng-click="debug = false">Close Debug</button>
 		<!-- Has results -->
 		<div ng-show="commands.results.length > 0">
 			<button class="btn btn-default" ng-click="commands.clearResults()">Clear</button>
 			<hr />
 			<ul class="list-group">
 				<li class="list-group-item" ng-repeat="result in commands.results">
-					<span class="badge">{{ result.date | date : 'EEE MMM, yyyy
+					<span class="badge">{{ result.date | date : 'EEE MMM, YYYY
 						hh:mm:ss a' }}</span> {{ result.content }}
 				</li>
 			</ul>
@@ -152,5 +141,6 @@
 	</div>
 	<!-- Sleep cover -->
 	<div ng-show="focus == 'sleep'" class="sleep-cover fade"></div>
+
 </body>
 </html>

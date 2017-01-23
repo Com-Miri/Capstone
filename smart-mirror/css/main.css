@@ -267,6 +267,57 @@ ul.calendar {
     width: 60px;
 }
 
+.traffic {
+  /* add 3/28 Mon.*/
+  margin-top : 50px;
+  background-color: black;
+  /*background: linear-gradient(to bottom right,#A22020, #EE0000);*/
+  border-radius: 10px;
+}
+#traffic-sidebar {
+	width : 30px;
+	height : 103px;
+	float : left;
+	background: linear-gradient(#141414,#4682B4);
+	border-top-left-radius : 10px;
+	border-bottom-left-radius : 10px;
+}
+
+#titleTraffic {
+    /* add 3/28 Mon.*/
+    text-align : center;
+    font-size : 25px;
+    background: linear-gradient(#4682B4,#141414);
+ 	border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+
+.traffic-information {
+    text-align: right;
+}
+
+
+#traffic-content {
+  /* add 3/28 Mon.*/
+  border-radius: 10px;
+  background : linear-gradient(to right, #7D7D7D, #7F7F7F);
+  font-weight : bold;
+  
+}
+
+
+/** Youtube IFRAME */
+.yt_player_iframe{
+  width: 800px;
+  height: 600px;
+}
+
+/** Subway*/
+.subwayInfo {
+  font-size: 30px;
+}
+
 /** Noti */
 #titleNoti {
   font-size : 25px;
@@ -286,6 +337,19 @@ ul.calendar {
     border-radius: 5px;
     margin-bottom: 15px;
 }
+/** News */
+.news{
+	width:600px; 
+	margin:auto;
+}
+#news-div{
+	background: linear-gradient(to bottom right,#dcdcdc, #FFFFFF);
+	border-radius: 5px;
+}
+#news-div span.titletext{
+	color : #000;
+	display: list-item;
+} 
 
 .contents{
   max-width: 100%;

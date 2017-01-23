@@ -45,15 +45,19 @@
             }, opts);
           }
         }
-        else{
+        else
+        {
           $rootScope.$broadcast('error',geolocation_msgs['errors.location.unsupportedBrowser']);
           $rootScope.$apply(function(){deferred.reject(geolocation_msgs['errors.location.unsupportedBrowser']);});
         }
         geoloc = deferred.promise;
         return deferred.promise;
-        }
+      }
+
         return service;
     }
+
     angular.module('SmartMirror')
         .factory('GeolocationService', GeolocationService);
+
 }());

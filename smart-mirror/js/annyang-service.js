@@ -6,6 +6,7 @@
 
         // COMMANDS
         service.commands = {};
+
         service.addCommand = function(phrase, callback) {
             var command = {};
             
@@ -21,11 +22,6 @@
             annyang.addCommands(service.commands);
             console.debug('added command "' + phrase + '"', service.commands);
         };
-        
-        service.setLanguage = function(langCode) {
-            annyang.setLanguage(langCode);
-        };
-        service.setLanguage("ko");
 
         service.start = function(listening, interimResult, result) {
             console.log("annyang start");
@@ -34,17 +30,16 @@
             	
             annyang.start();
             
-            /*
-            //안드로이드로 음성인식
             sender.on('command',function(command){
           	  annyang.addCallback('android',function(){
+          		  
           	  });
             });
-            */
             
             if (typeof(listening) == "function") {
                 annyang.addCallback('start', function(){
                   $rootScope.$apply(listening(true));
+                  
                 });
                 annyang.addCallback('end', function(data){
                 	console.log("End", data);
@@ -61,9 +56,11 @@
                 });
             };
         };
+
         return service;
     }
 
     angular.module('SmartMirror')
         .factory('AnnyangService', AnnyangService);
+
 }(window.annyang));

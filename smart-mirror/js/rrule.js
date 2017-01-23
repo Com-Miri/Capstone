@@ -218,6 +218,7 @@ var dateutil = {
             bits[7] || 0
         ));
     }
+
 };
 
 dateutil.Time = function(hour, minute, second) {

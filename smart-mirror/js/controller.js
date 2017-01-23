@@ -25,7 +25,7 @@
         var os = require('os');
         var networkInterfaces = os.networkInterfaces();
         $scope.ipAddress = networkInterfaces.wlan0[0].address;
-        
+
         // Update the time
         function updateTime(){
             $scope.date = new Date();
@@ -40,6 +40,13 @@
         	$scope.map = MapService.generateMap("Seoul,Korea");
             var tick = $interval(updateTime, 1000); // 1초 마다
             updateTime();
+
+            /** GPS 정보를 가져온다 */
+            GeolocationService.getLocation({enableHighAccuracy: true}).then(function(geoposition){
+                console.log("Geoposition", geoposition);
+                $scope.map = MapService.generateMap(geoposition.coords.latitude+','+geoposition.coords.longitude);
+            });
+            restCommand();
 
             /** 현재 장소를 가져오며, 날씨 정보를 가져온다. */
             var refreshMirrorData = function() {
@@ -98,63 +105,7 @@
                 console.debug("Boop Boop. Showing debug info...");
                 $scope.debug = true;
             });
-            
-/*
-            //안드로이드에서 보낸 SST 명령어를 미러와 동작하게 하는 부분
-            var sender = require('remote').getGlobal('sender');
-     	    sender.on('android',function(android){
-     	    	$scope.interimResult = android.command; // 미러의 음성인식된 문구에 보여짐
-	    		console.log("Android Command :: "+android.command);
-	    		var androidCommand = android.command+"";
-	    		
-    			if(androidCommand === command.sleep) { functionService.goSleep($scope);}
-    			else if(androidCommand === command.whois) { functionService.whoIsSmartMirror($scope); }
-    			else if(androidCommand === command.home) { functionService.defaultHome($scope); }  
-    			else if(androidCommand === command.wake) { functionService.wake($scope); }
-    			else if(androidCommand === command.whatcanisay) { functionService.whatCanISay($scope); }
-    			else if(androidCommand === command.map) { functionService.map($scope,GeolocationService,MapService); }
-    			else if(androidCommand === command.news) { functionService.news($scope); }
-    			else if(androidCommand === command.photo) { functionService.photo(); }
-    			else if(androidCommand === command.video) { functionService.video(); }
-    			else if(androidCommand === command.lighton) { functionService.lightOn();}
-    			else if(androidCommand === command.lightoff) { functionService.lightOff();}
-    			
-    			
-    			// Map Service ***의 위치 보여줘 
-    			var locationExist = androidCommand.indexOf("위치");
-	    		if(locationExist != -1) {
-	    			var locationValue = androidCommand.split("위치");
-	    			console.log(locationValue[0]);
-	    			functionService.location(locationValue[0],$scope,GeolocationService,MapService);
-	    		}
-	    		
-	    		// Youtube *** 동영상 보여줘 
-	    		var youtubeExist = androidCommand.indexOf("동영상");
-	    		if(youtubeExist != -1) {
-	    			if(androidCommand === "동영상 정지") {
-	    				functionService.stopYoutube($scope);
-	    			}else {
-		    			var youtubeValue = androidCommand.split("동영상");
-		    			console.log(youtubeValue[0]);
-		    			functionService.playYoutube(youtubeValue[0],$scope,$sce,YoutubeService);
-	    			}
-     	    	}
-	    		
-	    		// 지하철 **역 *호선 *행성 
-	    		var subwayExist = androidCommand.indexOf("역");
-	    		if(subwayExist != -1) {
-	    			// OO역 OO호선 상(하)행선
-	    			var temp1 = androidCommand.split("역");
-	    			var temp2 = temp1[1].split("호선");
-	    			
-	    			var subwayStation = temp1[0];
-	    			var subwayLineNumber = temp2[0].trim();
-	    			var subwayUpDown = temp2[1].trim();
-	    			console.log(subwayStation+"역"+subwayLineNumber+"호선"+subwayUpDown);
-	    			functionService.subway(subwayStation,subwayLineNumber,subwayUpDown,$scope,SubwayService);
-	    		}	    		
-    	    });
-*/
+
             var resetCommandTimeout;
             //Track when the Annyang is listening to us
             AnnyangService.start(function(listening){
@@ -169,8 +120,11 @@
             
             $scope.interimResult = DEFAULT_COMMAND_TEXT; // 미러의 음성인식된 문구에 보여짐
         };
+
         _this.init();
     }
+
     angular.module('SmartMirror')
         .controller('MirrorCtrl', MirrorCtrl);
+
 }(window.angular));
