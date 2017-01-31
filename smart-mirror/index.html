@@ -48,12 +48,12 @@
 <body ng-controller="MirrorCtrl as commands">
 	<div class="top">
 		<div class="top-left">
-			<div class="date grey">{{date | date : 'EEEE, MMMM d YYYY'}}</div>
-			<div class="time">{{date | date : 'hh:mm:ss a'}}</div>
-		</div>
-	</div>
-	<div class="top-right">	
-		<div class="weather">
+			<div class="date grey"><span ng-bind="date.format('dddd')"></span>
+				<span ng-bind="date.format('LL')"></span></div>
+		<div class="time" ng-bind="date.format('LT')"></div>		
+		</div>	</div>	<div class="top-right">	
+
+	<div class="weather">
 			<div id="weather-sidebar" class="fade" ng-show="focus == 'default'"></div>
 			<div>
 				<div class="weather-today">
