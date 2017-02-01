@@ -1,1 +1,94 @@
-<!DOCTYPE html><html ng-app="SmartMirror"><head>  <meta charset="utf-8">  <title>Smart Mirror</title>  <!-- Styles and Resources -->  <link rel="shortcut icon" href="favicon.ico" />  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800,700' rel='stylesheet' type='text/css'>  <link rel="stylesheet" href="css/main.css" /></head><body ng-controller="MirrorCtrl as commands">  <div class="top">    <div class="top-left">    <div class="date grey"><span ng-bind="date.format('dddd')"></span>    <span ng-bind="date.format('LL')"></span></div> <div class="time" ng-bind="date.format('LT')"></div>    </div>    <div class="top-right">      <div class="weather">        <div class="weather-today">          <span class="tempreture">{{currentForcast.temperature}}&deg;</span>        </div>        <div class="weather-week-descriptor">{{weeklyForcast.summary}}</div>        <div class="weather-week" ng-repeat="forcast in weeklyForcast.data" ng-if="$index > 0">          <div class="weather-week-day">            <span class="day light-grey">{{forcast.day}}</span>            <span class="tempreture tempreture-min">{{forcast.temperatureMin}}</span>            <span class="tempreture tempreture-max">{{forcast.temperatureMax}}</span>          </div>        </div>      </div>    </div>  </div>  <div class="container">    <div class="middle-center">      <h1>{{complement}}</h1>      <h3 ng-show="!(user.name === undefined)">{{user.name}}</h3>    </div>    <div class="bottom-center">      <!-- Command list -->      <div class="commands animate-grow" ng-show="focus == 'commands'">        <h2>사용 가능한 질문</h2>        <dl>          <dt>사용 가능한 질문</dt>          <dd>사용 가능한 질문을 보여줍니다.</dd>          <dt>집</dt>          <dd>홈 스크린으로 돌아갑니다.</dd>        </dl>        <small>          We are using node <script>document.write(process.versions.node)</script>,          Chrome <script>document.write(process.versions.chrome)</script>,          and Electron <script>document.write(process.versions.electron)</script>.        </small>      </div>      <div class="interim-result" ng-bind="interimResult"></div>    </div>  </div>  <!-- Debug Buttons -->  <div class="debug-info">    <!--<button ng-click="debug = true">Open Debug</button>-->  </div>  <div class="debug-info" ng-show="debug == true">    <!-- Has results -->    <div ng-show="commands.results.length > 0">      <button class="btn btn-default" ng-click="commands.clearResults()">Clear</button>      <hr/>      <ul class="list-group">        <li class="list-group-item" ng-repeat="result in commands.results">          <span class="badge">{{ result.date | date : 'EEE MMM, YYYY hh:mm:ss a' }}</span>          {{ result.content }}        </li>      </ul>    </div>  </div>  <!-- Sleep cover -->  <div ng-show="focus == 'sleep'" class="sleep-cover fade"></div>  <!-- Libraries -->  <script src="bower_components/angular/angular.min.js"></script>  <script src="bower_components/angular-animate/angular-animate.min.js"></script>  <script src="bower_components/moment/min/moment.min.js"></script>  <script src="bower_components/jquery/dist/jquery.min.js"></script>  <script src="bower_components/xml2json/xml2json.js"></script>  <!-- App -->  <script src="js/annyang.js"></script>  <script src="config.js"></script>  <script src="js/command.js"></script>  <script src="js/app.js"></script>  <script src="js/annyang-service.js"></script>  <script src="js/weather-service.js"></script>  <script src="js/geolocation-service.js"></script>  <script src="js/sound-cloud-service.js"></script>  <script src="js/controller.js"></script>  <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script></body></html>
+<!DOCTYPE html>
+<html ng-app="SmartMirror">
+  <head>  <meta charset="utf-8">  
+    <title>Smart Mirror</title>  
+    <!-- Styles and Resources -->  
+    <link rel="shortcut icon" href="favicon.ico" />  
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,800,700' rel='stylesheet' type='text/css'>  
+    <link rel="stylesheet" href="css/main.css" /></head>
+  <body ng-controller="MirrorCtrl as commands">  
+    <div class="top">    
+      <div class="top-left">    
+        <div class="date grey">
+          <span ng-bind="date.format('dddd')"></span>    
+          <span ng-bind="date.format('LL')"></span></div> 
+        <div class="time" ng-bind="date.format('LT')"></div>    
+      </div>    
+      <div class="top-right">      
+        <div class="weather">        
+          <div class="weather-today">          
+            <span class="tempreture">{{currentForcast.temperature}}&deg;</span>        
+          </div>        
+          <div class="weather-week-descriptor">{{weeklyForcast.summary}}</div>        
+          <div class="weather-week" ng-repeat="forcast in weeklyForcast.data" ng-if="$index > 0">          
+            <div class="weather-week-day">            
+              <span class="day light-grey">{{forcast.day}}</span>            
+              <span class="tempreture tempreture-min">{{forcast.temperatureMin}}</span>            
+              <span class="tempreture tempreture-max">{{forcast.temperatureMax}}</span>          
+            </div>        
+          </div>      
+        </div>    
+      </div>  
+    </div>  
+    <div class="container">    
+      <div class="middle-center">      
+        <h1>{{complement}}</h1>      
+        <h3 ng-show="!(user.name === undefined)">{{user.name}}</h3>    
+      </div>    
+      <div class="bottom-center">      
+        <!-- Command list -->      
+        <div class="commands animate-grow" ng-show="focus == 'commands'">        
+          <h2>사용 가능한 질문</h2>        
+          <dl>          
+            <dt>사용 가능한 질문</dt>          
+            <dd>사용 가능한 질문을 보여줍니다.</dd>          
+            <dt>집</dt>          
+            <dd>홈 스크린으로 돌아갑니다.</dd>        
+          </dl>        
+          <small>         
+            We are using node <script>document.write(process.versions.node)</script>,         
+            Chrome <script>document.write(process.versions.chrome)</script>,          
+            and Electron <script>document.write(process.versions.electron)</script>.        
+          </small>      
+        </div>      
+        <div class="interim-result" ng-bind="interimResult"></div>    
+      </div>  
+    </div>  
+    <!-- Debug Buttons -->  
+    <div class="debug-info">    
+      <!--<button ng-click="debug = true">Open Debug</button>-->  
+    </div>  
+    <div class="debug-info" ng-show="debug == true">    
+      <!-- Has results -->    
+      <div ng-show="commands.results.length > 0">      
+        <button class="btn btn-default" ng-click="commands.clearResults()">Clear</button>      
+        <hr/>      
+        <ul class="list-group">        
+          <li class="list-group-item" ng-repeat="result in commands.results">          
+            <span class="badge">{{ result.date | date : 'EEE MMM, YYYY hh:mm:ss a' }}</span>          
+            {{ result.content }}        
+          </li>      
+        </ul>    
+      </div>  
+    </div>  
+    <!-- Sleep cover -->  
+    <div ng-show="focus == 'sleep'" class="sleep-cover fade"></div>  
+    <!-- Libraries -->  
+    <script src="bower_components/angular/angular.min.js"></script>  
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>  
+    <script src="bower_components/moment/min/moment.min.js"></script>  
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>  
+    <script src="bower_components/xml2json/xml2json.js"></script>  
+    <!-- App -->  
+    <script src="js/annyang.js"></script>  
+    <script src="config.js"></script>  
+    <script src="js/command.js"></script>  
+    <script src="js/app.js"></script>  
+    <script src="js/annyang-service.js"></script>  
+    <script src="js/weather-service.js"></script>  
+    <script src="js/geolocation-service.js"></script>  
+    <script src="js/sound-cloud-service.js"></script>  
+    <script src="js/controller.js"></script>  
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+  </body>
+</html>
