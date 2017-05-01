@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="새로 편집하기"
+        android:id="@+id/edit"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="바로 보여주기"
+        android:id="@+id/display"
+        android:layout_marginBottom="61dp"
+        android:layout_alignBottom="@+id/edit"
+        android:layout_alignLeft="@+id/edit"
+        android:layout_alignStart="@+id/edit" />
+
+    <Button
+        android:layout_gravity="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/display"
+        android:layout_alignLeft="@+id/display"
+        android:layout_alignStart="@+id/display"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/ip"
+        android:text="ip설정"/>
+</RelativeLayout>
